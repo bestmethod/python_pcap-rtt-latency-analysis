@@ -6,7 +6,9 @@ Pre-requisites:
 * python3 package (on ubuntu: $ sudo apt install python3)
 
 Usage:
+```
 $ python3 rttcheck2.py directory_with_pcap_files/ tabbed|length
+```
 Tabbled and length are formating parameters only, see examples below.
 
 Example 1:
