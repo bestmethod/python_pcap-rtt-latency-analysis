@@ -1,4 +1,7 @@
 # python_pcap-rtt-latency-analysis
+## Version: 0.1a
+### Version notes: works, but will just die if errors encountered, and doesn't check parameters before parsing them. Only does reading and counting, so should be safe no matter what.
+### Disclaimer: I take no responsibility for this software breaking anything, causing issues to systems, financial, or other loss, or for it destroying the planet. It comes with no guarantee and support.
 Python script to produce rtt (packet round trip) latency analysis from pcap files
 
 Pre-requisites:
