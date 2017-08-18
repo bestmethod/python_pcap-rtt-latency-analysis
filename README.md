@@ -1,6 +1,6 @@
 # python_pcap-rtt-latency-analysis
-## Version: 0.1a
-### Version notes: works, but will just die if errors encountered, and doesn't check parameters before parsing them. Only does reading and counting, so should be safe no matter what.
+## Version: 0.9b
+### Version notes: works, does paramter parse and handles tshark errors. Only does reading and counting, so should be safe no matter what.
 ### Disclaimer: I take no responsibility for this software breaking anything, causing issues to systems, financial, or other loss, or for it destroying the planet. It comes with no guarantee and support.
 Python script to produce rtt (packet round trip) latency analysis from pcap files
 
@@ -10,20 +10,24 @@ Pre-requisites:
 
 Usage:
 ```
-$ python3 rttcheck2.py directory_with_pcap_files/ tabbed|length
+Usage: rttcheck2.py [-h] [-d pcapDirectory] [-f pcapFile] [-p printFormat]
+	-h | --help                                 	This help screen                                                        
+	-d pcapDir | --pcap-dir=pcapDir             	Directory containing a list of pcap file to be analyzed                 
+	-f pcapFile | --pcap-file=pcapFile          	A single pcap file that should be analyzed.                             
+	.                                           	If pcap-dir is also provided, this file is added to the end of the list.
+	-p printFormat | --print-format=printFormat 	Format used for printing. Currently available: tabbed|length            
 ```
-Tabbled and length are formating parameters only, see examples below.
 
 Example 1:
 ```
-$ python3 rttcheck2.py tcpdump_pcap_list/ tabbed
-Filename: file1.pcap
+$ python3 rttcheck2.py -d tcpdump_pcap_list/ -p tabbed
+Filename: tcpdump_pcap_list/file1.pcap
 Max_rtt_msec:39.821000000000005 Count_rtt:61486 Avg_rtt_msec:5.649642536511778
 RTT_hist:
 >0msec >1msec >2msec >4msec >8msec 16msec >32msec >64msec >128msec >256msec >512msec >1024msec
  61486  36174  32547  26964  18497   6030     243       0        0        0        0         0
 ==================================================
-Filename: file2.pcap
+Filename: tcpdump_pcap_list/file2.pcap
 Max_rtt_msec:40.493 Count_rtt:62467 Avg_rtt_msec:5.730288280211252
 RTT_hist:
 >0msec >1msec >2msec >4msec >8msec 16msec >32msec >64msec >128msec >256msec >512msec >1024msec
@@ -33,8 +37,8 @@ RTT_hist:
 
 Example 2:
 ```
-$ python3 rttcheck2.py tcpdump_pcap_list/ length
-Filename: clf1002_clf1010.pcap
+$ python3 rttcheck2.py -f file2.pcap -p length
+Filename: file2.pcap
 Max_rtt_msec:39.821000000000005 Count_rtt:61486 Avg_rtt_msec:5.649642536511778
 RTT_hist:
  >msec	Count
@@ -45,17 +49,5 @@ RTT_hist:
 8	18497
 16	6030
 32	243
-==================================================
-Filename: clf1003_clf1010.pcap
-Max_rtt_msec:40.493 Count_rtt:62467 Avg_rtt_msec:5.730288280211252
-RTT_hist:
- >msec	Count
-0	62467
-1	39910
-2	37461
-4	31515
-8	19009
-16	4783
-32	157
 ==================================================
 ```
