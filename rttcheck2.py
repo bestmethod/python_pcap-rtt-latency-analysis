@@ -54,13 +54,16 @@ def main(argv):
     proc = subprocess.Popen(comm%(fn), shell=True, stdout=subprocess.PIPE)
     while True:
         line = proc.stdout.readline().strip()
-        if str(line) == "b''":
+        if str(line) == "b''" or str(line) == "":
             proc.communicate()
             if proc.returncode > 0:
                 print("ERROR: Something went wrong with tshark (error should be above)")
                 return 6
             break
-        rtt = float(line)
+        try:
+            rtt = float(line)
+        except:
+            print("Error processing line: %s" %line)
         nTot = nTot + rtt
         nCount = nCount + 1
         if nMax < rtt: nMax = rtt
